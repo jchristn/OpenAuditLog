@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAuditLog", "OpenAuditLog\OpenAuditLog.csproj", "{63C76678-B6C8-4FFC-8917-A9BAD51B85C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B2D6F6D8-0710-43C4-9A7E-8D71F79060AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63C76678-B6C8-4FFC-8917-A9BAD51B85C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C76678-B6C8-4FFC-8917-A9BAD51B85C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C76678-B6C8-4FFC-8917-A9BAD51B85C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C76678-B6C8-4FFC-8917-A9BAD51B85C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D6F6D8-0710-43C4-9A7E-8D71F79060AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D6F6D8-0710-43C4-9A7E-8D71F79060AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D6F6D8-0710-43C4-9A7E-8D71F79060AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D6F6D8-0710-43C4-9A7E-8D71F79060AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE72479F-0CC9-4786-BD87-CD696FFA6A76}
+	EndGlobalSection
+EndGlobal
