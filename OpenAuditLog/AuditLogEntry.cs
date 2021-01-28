@@ -35,43 +35,43 @@ namespace OpenAuditLog
         /// <summary>
         /// Identity of the originator of the request.
         /// </summary>
-        [Column("identity", false, DataTypes.Nvarchar, 64, false)]
+        [Column("identity", false, DataTypes.Nvarchar, 64, true)]
         public string Identity { get; set; } = null;
 
         /// <summary>
         /// Event source.
         /// </summary>
-        [Column("source", false, DataTypes.Nvarchar, 64, false)]
+        [Column("source", false, DataTypes.Nvarchar, 64, true)]
         public string Source { get; set; } = null;
         
         /// <summary>
         /// Event target.
         /// </summary>
-        [Column("target", false, DataTypes.Nvarchar, 64, false)]
+        [Column("target", false, DataTypes.Nvarchar, 64, true)]
         public string Target { get; set; } = null;
 
         /// <summary>
         /// Resource on the target with which the source was attempting to interact.
         /// </summary>
-        [Column("resource", false, DataTypes.Nvarchar, 256, false)]
+        [Column("resource", false, DataTypes.Nvarchar, 256, true)]
         public string Resource { get; set; } = null;
         
         /// <summary>
         /// The handle of the resource.
         /// </summary>
-        [Column("handle", false, DataTypes.Nvarchar, 256, false)]
+        [Column("handle", false, DataTypes.Nvarchar, 256, true)]
         public string Handle { get; set; } = null;
         
         /// <summary>
         /// Type of event.
         /// </summary>
-        [Column("type", false, DataTypes.Nvarchar, 64, false)]
+        [Column("type", false, DataTypes.Nvarchar, 64, true)]
         public string Type { get; set; } = null;
 
         /// <summary>
         /// Indicates the result of the operation.
         /// </summary>
-        [Column("result", false, DataTypes.Nvarchar, 32, false)]
+        [Column("result", false, DataTypes.Nvarchar, 32, true)]
         public EventResult Result { get; set; } = EventResult.Unknown;
 
         /// <summary>
@@ -123,6 +123,7 @@ namespace OpenAuditLog
         /// <summary>
         /// Instantiate the object.
         /// </summary>
+        /// <param name="metadata">User-supplied metadata.</param>
         /// <param name="identity">Identity of the event originator.</param>
         /// <param name="source">Event source.</param>
         /// <param name="target">Event target.</param>
@@ -131,20 +132,29 @@ namespace OpenAuditLog
         /// <param name="eventType">Type of event.</param>
         /// <param name="eventResult">Result of the event.</param>
         /// <param name="contentLength">Amount of data involved in the event.</param>
-        /// <param name="metadata">User-supplied metadata.</param>
-        public AuditLogEntry(string identity, string source, string target, string resource, string handle, string eventType, EventResult eventResult, long contentLength = 0, string metadata = null)
+        public AuditLogEntry(
+            object metadata = null,
+            string identity = null,
+            string source = null,
+            string target = null,
+            string resource = null,
+            string handle = null,
+            string eventType = null,
+            EventResult eventResult = EventResult.Unknown,
+            long contentLength = 0)
         {
-            Identity = identity ?? throw new ArgumentNullException(nameof(identity));
-            Source = source ?? throw new ArgumentNullException(nameof(source));
-            Target = target ?? throw new ArgumentNullException(nameof(target));
-            Resource = resource ?? throw new ArgumentNullException(nameof(resource));
-            Handle = handle ?? throw new ArgumentNullException(nameof(handle));
-            Type = eventType ?? throw new ArgumentNullException(nameof(eventType));
+            if (metadata != null) Metadata = Common.SerializeJson(metadata, false);
+
+            Identity = identity;
+            Source = source;
+            Target = target;
+            Resource = resource;
+            Handle = handle;
+            Type = eventType;
             Result = eventResult;
             ContentLength = contentLength;
-            Metadata = metadata; 
         }
-
+         
         #endregion
 
         #region Public-Methods

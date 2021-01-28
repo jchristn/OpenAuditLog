@@ -51,7 +51,14 @@ Func<AuditLogEntry, bool> func2 = delegate (AuditLogEntry a)
 
 auditLog.AddTarget(new AuditLogTarget("target1", func1)); // these will succeed
 auditLog.AddTarget(new AuditLogTarget("target2", func2)); // these will fail
-auditLog.AddEvent(new AuditLogEntry("identity", "source", "target", "resource", "handle", "eventType", EventResult.Success, 0, "{'foo'='bar'}"));
+
+// add event just using metadata, sending to all targets, max attempts defined in MaxAttempts
+Dictionary<string, string> md = new Dictionary<string, string>();
+md.Add("foo", "bar");
+auditLog.AddEvent(new AuditLogEntry(md));
+
+// add event using all available parameters, sending to all targets, max attempts set to 2
+auditLog.AddEvent(new AuditLogEntry("identity", "source", "target", "resource", "handle", "eventType", EventResult.Success, 0, "{'foo'='bar'}"), null, 2);
 ```
 
 ## Version History

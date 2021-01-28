@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OpenAuditLog;
 
 namespace Test
@@ -29,7 +30,11 @@ namespace Test
 
             for (int i = 0; i < 5; i++)
             {
-                _AuditLog.AddEvent(new AuditLogEntry("identity", "source", "target", "resource", "handle", "eventType", EventResult.Success, 0, "{'foo'='bar'}"), null, 2);
+                Dictionary<string, string> md = new Dictionary<string, string>();
+                md.Add("foo", "bar");
+
+                AuditLogEntry entry = new AuditLogEntry(md);
+                _AuditLog.AddEvent(entry, null, 2);
             }
 
             Console.WriteLine("Press ENTER to exit");

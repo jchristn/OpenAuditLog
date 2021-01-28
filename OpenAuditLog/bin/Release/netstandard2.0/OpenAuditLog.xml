@@ -173,10 +173,11 @@
             Instantiate the object.
             </summary>
         </member>
-        <member name="M:OpenAuditLog.AuditLogEntry.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,OpenAuditLog.EventResult,System.Int64,System.String)">
+        <member name="M:OpenAuditLog.AuditLogEntry.#ctor(System.Object,System.String,System.String,System.String,System.String,System.String,System.String,OpenAuditLog.EventResult,System.Int64)">
             <summary>
             Instantiate the object.
             </summary>
+            <param name="metadata">User-supplied metadata.</param>
             <param name="identity">Identity of the event originator.</param>
             <param name="source">Event source.</param>
             <param name="target">Event target.</param>
@@ -185,7 +186,6 @@
             <param name="eventType">Type of event.</param>
             <param name="eventResult">Result of the event.</param>
             <param name="contentLength">Amount of data involved in the event.</param>
-            <param name="metadata">User-supplied metadata.</param>
         </member>
         <member name="M:OpenAuditLog.AuditLogEntry.ToJson(System.Boolean)">
             <summary>
