@@ -58,7 +58,7 @@ md.Add("foo", "bar");
 auditLog.AddEvent(new AuditLogEntry(md));
 
 // add event using all available parameters, sending to all targets, max attempts set to 2
-auditLog.AddEvent(new AuditLogEntry("identity", "source", "target", "resource", "handle", "eventType", EventResult.Success, 0, "{'foo'='bar'}"), null, 2);
+auditLog.AddEvent(new AuditLogEntry("identity", "source", "target", "resource", "handle", "eventType", EventResult.Success, 0, "{'foo':'bar'}"), null, 2);
 ```
 
 ## Version History
