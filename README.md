@@ -8,25 +8,63 @@ Simple C# event and audit log library with persistence allowing you to write you
 
 ## How it Works
 
-1) Instantiate the ```AuditLog``` object, specifying the name of the Sqlite database file to use.
+### Instantiate
 
-- Set ```Logger``` if you wish to output messages to the console or elsewhere
-- Also serves as a "logger of last resort" in case an event can't be sent to a target
+Instantiate the ```AuditLog``` object, specifying the name of the Sqlite database file to use.
 
-2) Define and add your targets using ```AddTarget``` and the ```AuditLogTarget``` class.
+```csharp
+using OpenAuditLog;
 
-- Your target function should return a boolean with ```true``` indicating success...
-- ...or ```false``` indicating failure and that OpenAuditLog should try again
+AuditLog log = new AuditLog("auditlog.db");
+```
 
-3) Add events using ```AddEvent``` and watch them fly.
+### Define Event Targets
 
-- Events added through ```AddEvent``` are persisted in Sqlite until emitted successfully
-- If multiple targets are configured, one record per target will be created for each event
-- Control the number of attempts to send an event:
-  - By modifying ```Retries```
-  - Or specify the optional parameter ```maxAttempts``` in ```AddEvent```
-  - Those that cannot be sent successfully will be removed from the queue...
-  - ...and sent to the ```Logger``` method
+Define and add your targets using ```AddTarget``` and the ```AuditLogTarget``` class.  Your target function should return a boolean with ```true``` indicating success, or, ```false``` indicating failure and that OpenAuditLog should try again.
+
+```csharp
+Func<AuditLogEntry, bool> func1 = delegate (AuditLogEntry a)
+{
+  Console.WriteLine("Action 1: " + a.ToJson(false));
+  return true; // report success
+};
+
+log.AddTarget("MyTarget", func1);
+```
+
+### Logger of Last Resort
+
+Set ```Logger``` if you wish to output messages to the console or elsewhere.  This also serves as a "logger of last resort" in case an event can't be sent to a target.  Additionally, you can create handlers for the ```EntrySendFailure``` and ```EntryEvicted``` events.
+
+```csharp
+log.Logger = Console.WriteLine;
+log.EntrySendFailure += MyEntrySendFailure;
+log.EntryEvicted += MyEntryEvicted;
+
+static void MyEntrySendFailure(object sender, EntryEventArgs args)
+{
+  Console.WriteLine("Entry " + args.Entry.GUID + " couldn't be sent to target " + args.Target.GUID);
+}
+
+static void MyEntryEvicted(object sender, EntryEventArgs args)
+{
+  Console.WriteLine("Entry " + args.Entry.GUID + " was evicted, failed too hard!");
+}
+```
+
+### Let 'Er Rip
+
+Add events using ```AddEvent``` and watch them fly.
+
+Events added through ```AddEvent``` are persisted in Sqlite until emitted successfully.  If multiple targets are configured, one record per target will be created for each event.  You can control the number of attempts to send an event by modifying ```AuditLog.MaxAttempts``` or specify the optional parameter ```maxAttempts``` in ```AuditLog.AddEvent```.  
+
+Events sent successfully are removed from Sqlite, and those that have failed the specified number of times will also be removed.  Refer to "Logger of Last Resort" above to determine how to intercept such situations.
+
+```csharp
+// using an object of your own
+AuditLogEntry myEntry = new AuditLogEntry(myClassInstance);
+log.AddEvent(myEntry);
+```
 
 ## Simple Example
 
@@ -37,28 +75,14 @@ AuditLog auditLog = new AuditLog("auditlog.db");
 auditLog.Logger = Console.WriteLine;
 auditLog.MaxAttempts = 3;
 
-Func<AuditLogEntry, bool> func1 = delegate (AuditLogEntry a)
+Func<AuditLogEntry, bool> myTarget = delegate (AuditLogEntry a)
 {
-    Console.WriteLine("Action 1: " + a.ToJson(false));
-    return true; // report success
+    Console.WriteLine("My target: " + a.ToJson(false));
+    return true; 
 };
 
-Func<AuditLogEntry, bool> func2 = delegate (AuditLogEntry a)
-{
-    Console.WriteLine("Action 2: " + a.ToJson(false));
-    return false; // report failure
-};
-
-auditLog.AddTarget(new AuditLogTarget("target1", func1)); // these will succeed
-auditLog.AddTarget(new AuditLogTarget("target2", func2)); // these will fail
-
-// add event just using metadata, sending to all targets, max attempts defined in MaxAttempts
-Dictionary<string, string> md = new Dictionary<string, string>();
-md.Add("foo", "bar");
-auditLog.AddEvent(new AuditLogEntry(md));
-
-// add event using all available parameters, sending to all targets, max attempts set to 2
-auditLog.AddEvent(new AuditLogEntry("identity", "source", "target", "resource", "handle", "eventType", EventResult.Success, 0, "{'foo':'bar'}"), null, 2);
+auditLog.AddTarget(new AuditLogTarget("target1", myTarget));  
+auditLog.AddEvent(new AuditLogEntry("Hello, world!"));
 ```
 
 ## Version History

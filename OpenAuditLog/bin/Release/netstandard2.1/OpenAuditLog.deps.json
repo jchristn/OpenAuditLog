@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.1": {},
     ".NETStandard,Version=v2.1/": {
-      "OpenAuditLog/1.0.0.4": {
+      "OpenAuditLog/1.0.0.5": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
           "WatsonORM.Sqlite": "1.3.0.22"
@@ -211,7 +211,7 @@
     }
   },
   "libraries": {
-    "OpenAuditLog/1.0.0.4": {
+    "OpenAuditLog/1.0.0.5": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

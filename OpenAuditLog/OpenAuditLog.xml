@@ -35,6 +35,16 @@
             Minimum value is 1.
             </summary>
         </member>
+        <member name="E:OpenAuditLog.AuditLog.EntrySendFailure">
+            <summary>
+            Event to fire if an audit log entry cannot be sent to a target.
+            </summary>
+        </member>
+        <member name="E:OpenAuditLog.AuditLog.EntryEvicted">
+            <summary>
+            Event to fire if an audit log entry has exceeded the maximum attempts to send to a target.
+            </summary>
+        </member>
         <member name="M:OpenAuditLog.AuditLog.#ctor(System.String)">
             <summary>
             Instantiate the object.
@@ -233,6 +243,39 @@
             <summary>
             Commonly-used static methods.
             </summary>
+        </member>
+        <member name="T:OpenAuditLog.EntryEventArgs">
+            <summary>
+            Event arguments for attempts to send an entry to a target.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.EntryEventArgs.Entry">
+            <summary>
+            Audit log entry.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.EntryEventArgs.Target">
+            <summary>
+            Audit log target.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.EntryEventArgs.Exception">
+            <summary>
+            Exception.
+            </summary>
+        </member>
+        <member name="M:OpenAuditLog.EntryEventArgs.#ctor">
+            <summary>
+            Instantiate the object.
+            </summary>
+        </member>
+        <member name="M:OpenAuditLog.EntryEventArgs.#ctor(OpenAuditLog.AuditLogEntry,OpenAuditLog.AuditLogTarget,System.Exception)">
+            <summary>
+            Instantiate the object.
+            </summary>
+            <param name="entry">Audit log entry.</param>
+            <param name="target">Audit log target.</param>
+            <param name="exception">Exception data, if any.</param>
         </member>
         <member name="T:OpenAuditLog.EventResult">
             <summary>

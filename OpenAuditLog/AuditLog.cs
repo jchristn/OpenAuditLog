@@ -77,6 +77,16 @@ namespace OpenAuditLog
             }
         }
 
+        /// <summary>
+        /// Event to fire if an audit log entry cannot be sent to a target.
+        /// </summary>
+        public event EventHandler<EntryEventArgs> EntrySendFailure;
+
+        /// <summary>
+        /// Event to fire if an audit log entry has exceeded the maximum attempts to send to a target.
+        /// </summary>
+        public event EventHandler<EntryEventArgs> EntryEvicted;
+
         #endregion
 
         #region Private-Members
@@ -322,6 +332,7 @@ namespace OpenAuditLog
                         {
                             Log("entry " + entry.GUID + " reached maximum attempts, deleting (" + entry.Attempts + " of " + entry.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(entry, false));
                             _ORM.Delete<AuditLogEntry>(entry);
+                            EntryEvicted?.Invoke(this, new EntryEventArgs(entry, null));
                             continue;
                         }
 
@@ -339,12 +350,16 @@ namespace OpenAuditLog
                                 {
                                     entry.Attempts = entry.Attempts + 1;
                                     _ORM.Update<AuditLogEntry>(entry);
+
                                     Log("target " + target.GUID + " " + target.Name + " reported failure for entry " + entry.GUID + " (" + entry.Attempts + " of " + entry.MaxAttempts + " max)");
+                                    EntrySendFailure?.Invoke(this, new EntryEventArgs(entry, target));
 
                                     if (entry.Attempts >= entry.MaxAttempts)
                                     {
                                         Log("entry " + entry.GUID + " reached maximum attempts, deleting (" + entry.Attempts + " of " + entry.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(entry, false));
                                         _ORM.Delete<AuditLogEntry>(entry);
+                                        EntryEvicted?.Invoke(this, new EntryEventArgs(entry, null));
+                                        continue;
                                     }
                                 }
                                 else
@@ -356,6 +371,7 @@ namespace OpenAuditLog
                             catch (Exception eInner)
                             {
                                 Log("exception encountered using target " + target.GUID + " " + target.Name + " for entry " + entry.GUID + Environment.NewLine + Common.SerializeJson(eInner, true));
+                                EntrySendFailure?.Invoke(this, new EntryEventArgs(entry, target, eInner));
                             }
                         }
                     }

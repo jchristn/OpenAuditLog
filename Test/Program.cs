@@ -30,15 +30,40 @@ namespace Test
 
             for (int i = 0; i < 5; i++)
             {
+                /*
                 Dictionary<string, string> md = new Dictionary<string, string>();
                 md.Add("foo", "bar");
 
                 AuditLogEntry entry = new AuditLogEntry(md);
+                */
+
+                /*
+                AuditLogEntry entry = new AuditLogEntry(new Person("Joel", "Christner"));
                 _AuditLog.AddEvent(entry, null, 2);
+                */
+
+                _AuditLog.AddEvent(new AuditLogEntry("Hello, world!"));
             }
 
             Console.WriteLine("Press ENTER to exit");
             Console.ReadLine();
+        }
+    }
+
+    class Person
+    {
+        public string First { get; set; } = null;
+        public string Last { get; set; } = null;
+
+        public Person()
+        {
+
+        }
+
+        public Person(string first, string last)
+        {
+            First = first;
+            Last = last;
         }
     }
 }

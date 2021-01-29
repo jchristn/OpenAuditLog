@@ -143,7 +143,34 @@ namespace OpenAuditLog
             EventResult eventResult = EventResult.Unknown,
             long contentLength = 0)
         {
-            if (metadata != null) Metadata = Common.SerializeJson(metadata, false);
+            if (metadata != null)
+            {
+                if (metadata is string
+                    || metadata is char[]
+                    || metadata is DateTime
+                    || metadata is uint
+                    || metadata is int
+                    || metadata is ushort
+                    || metadata is short
+                    || metadata is ulong
+                    || metadata is long
+                    || metadata is decimal
+                    || metadata is double
+                    || metadata is float
+                    || metadata is bool
+                    || metadata is Enum)
+                {
+                    Metadata = metadata.ToString();
+                }
+                else if (metadata is byte[])
+                {
+                    Metadata = Convert.ToBase64String((byte[])metadata);
+                }
+                else
+                {
+                    Metadata = Common.SerializeJson(metadata, false);
+                }
+            }
 
             Identity = identity;
             Source = source;

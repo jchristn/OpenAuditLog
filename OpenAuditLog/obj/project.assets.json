@@ -2183,7 +2183,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0.4",
+    "version": "1.0.0.5",
     "restore": {
       "projectUniqueName": "C:\\Code\\Misc\\OpenAuditLog\\OpenAuditLog\\OpenAuditLog.csproj",
       "projectName": "OpenAuditLog",

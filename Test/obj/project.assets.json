@@ -245,7 +245,7 @@
           "lib/netcoreapp3.1/WatsonORM.Sqlite.dll": {}
         }
       },
-      "OpenAuditLog/1.0.0.4": {
+      "OpenAuditLog/1.0.0.5": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
@@ -453,7 +453,7 @@
           "lib/netcoreapp3.1/WatsonORM.Sqlite.dll": {}
         }
       },
-      "OpenAuditLog/1.0.0.4": {
+      "OpenAuditLog/1.0.0.5": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
@@ -796,7 +796,7 @@
           "lib/net461/WatsonORM.Sqlite.dll": {}
         }
       },
-      "OpenAuditLog/1.0.0.4": {
+      "OpenAuditLog/1.0.0.5": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.6.1",
         "dependencies": {
@@ -1088,7 +1088,7 @@
           "lib/net461/WatsonORM.Sqlite.dll": {}
         }
       },
-      "OpenAuditLog/1.0.0.4": {
+      "OpenAuditLog/1.0.0.5": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.6.1",
         "dependencies": {
@@ -1347,7 +1347,7 @@
           "lib/net5.0/WatsonORM.Sqlite.dll": {}
         }
       },
-      "OpenAuditLog/1.0.0.4": {
+      "OpenAuditLog/1.0.0.5": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
@@ -1555,7 +1555,7 @@
           "lib/net5.0/WatsonORM.Sqlite.dll": {}
         }
       },
-      "OpenAuditLog/1.0.0.4": {
+      "OpenAuditLog/1.0.0.5": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
@@ -2120,7 +2120,7 @@
         "watsonorm.sqlite.nuspec"
       ]
     },
-    "OpenAuditLog/1.0.0.4": {
+    "OpenAuditLog/1.0.0.5": {
       "type": "project",
       "path": "../OpenAuditLog/OpenAuditLog.csproj",
       "msbuildProject": "../OpenAuditLog/OpenAuditLog.csproj"
@@ -2128,13 +2128,13 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "OpenAuditLog >= 1.0.0.4"
+      "OpenAuditLog >= 1.0.0.5"
     ],
     ".NETFramework,Version=v4.6.1": [
-      "OpenAuditLog >= 1.0.0.4"
+      "OpenAuditLog >= 1.0.0.5"
     ],
     "net5.0": [
-      "OpenAuditLog >= 1.0.0.4"
+      "OpenAuditLog >= 1.0.0.5"
     ]
   },
   "packageFolders": {
