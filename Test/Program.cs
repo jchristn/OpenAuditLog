@@ -12,6 +12,10 @@ namespace Test
         {
             _AuditLog = new AuditLog("auditlog.db");
             _AuditLog.Logger = Console.WriteLine;
+            _AuditLog.MaxAttempts = 5;
+            _AuditLog.IntervalMs = 1000;
+            _AuditLog.EntrySendFailure += EntrySendFailure;
+            _AuditLog.EntryEvicted += EntryEvicted;
 
             Func<AuditLogEntry, bool> func1 = delegate (AuditLogEntry a)
             {
@@ -30,23 +34,61 @@ namespace Test
 
             for (int i = 0; i < 5; i++)
             {
-                /*
-                Dictionary<string, string> md = new Dictionary<string, string>();
-                md.Add("foo", "bar");
+                #region Full-Object
 
-                AuditLogEntry entry = new AuditLogEntry(md);
-                */
+                Person identity = new Person("Person", i.ToString());
 
-                /*
-                AuditLogEntry entry = new AuditLogEntry(new Person("Joel", "Christner"));
-                _AuditLog.AddEvent(entry, null, 2);
-                */
+                Dictionary<string, object> source = new Dictionary<string, object>();
+                source.Add("SourceGUID", Guid.NewGuid());
+                source.Add("SourceID", i);
 
-                _AuditLog.AddEvent(new AuditLogEntry("Hello, world!"));
+                Dictionary<string, object> target = new Dictionary<string, object>();
+                target.Add("TargetGUID", Guid.NewGuid());
+                target.Add("TargetID", i);
+
+                Dictionary<string, object> resource = new Dictionary<string, object>();
+                resource.Add("ResourceGUID", Guid.NewGuid());
+                resource.Add("ResourceID", i);
+
+                Dictionary<string, object> metadata = new Dictionary<string, object>();
+                metadata.Add("MetadataGUID", Guid.NewGuid());
+                metadata.Add("MetadataID", i);
+
+                AuditLogEntry entry1 = new AuditLogEntry(
+                    identity,
+                    source,
+                    target,
+                    resource,
+                    metadata,
+                    "TestEvent",
+                    EventResult.Success,
+                    100);
+
+                #endregion
+
+                #region Simple-Object
+
+                AuditLogEntry entry2 = new AuditLogEntry();
+                entry2.Metadata = "Hello, world!";
+
+                #endregion
+
+                _AuditLog.AddEvent(entry1);
+                _AuditLog.AddEvent(entry2);
             }
 
             Console.WriteLine("Press ENTER to exit");
             Console.ReadLine();
+        }
+
+        static void EntrySendFailure(object sender, EntryEventArgs args)
+        {
+            Console.WriteLine("Failed sending event " + args.Entry.GUID + " to target " + args.Target.GUID);
+        }
+
+        static void EntryEvicted(object sender, EntryEventArgs args)
+        {
+            Console.WriteLine("Evicted event " + args.Entry.GUID + " due to excessive failures");
         }
     }
 

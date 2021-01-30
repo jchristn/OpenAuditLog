@@ -120,7 +120,7 @@ namespace OpenAuditLog
 
             _ORM = new WatsonORM(new DatabaseSettings(_DatabaseFilename));
             _ORM.InitializeDatabase();
-            _ORM.InitializeTable(typeof(AuditLogEntry));
+            _ORM.InitializeTable(typeof(AuditLogModel));
 
             _Token = _TokenSource.Token;
             _Emitter = Task.Run(() => Emitter(_Token), _Token);
@@ -229,8 +229,8 @@ namespace OpenAuditLog
             {
                 if (_Targets.Any(t => t.GUID.Equals(guid)))
                 {
-                    DbExpression e = new DbExpression(_ORM.GetColumnName<AuditLogEntry>(nameof(AuditLogEntry.TargetGUID)), DbOperators.Equals, guid);
-                    _ORM.DeleteMany<AuditLogEntry>(e);
+                    DbExpression e = new DbExpression(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.TargetGUID)), DbOperators.Equals, guid);
+                    _ORM.DeleteMany<AuditLogModel>(e);
 
                     List<AuditLogTarget> remove = _Targets.Where(t => t.GUID.Equals(guid)).ToList();
                     foreach (AuditLogTarget target in remove)
@@ -249,9 +249,11 @@ namespace OpenAuditLog
         /// <param name="entry">Audit log entry.</param>
         /// <param name="targetGuids">List of target GUIDs to which the event should be sent.  Leave null to send to all targets.</param>
         /// <param name="maxAttempts">The maximum number of attempts to make in sending this event.  Leave null to use the value from the 'Retries' property.</param>
-        public void AddEvent(AuditLogEntry entry, List<string> targetGuids = null, int? maxAttempts = null)
+        /// <returns>GUID of the entry.</returns>
+        public string AddEvent(AuditLogEntry entry, List<string> targetGuids = null, int? maxAttempts = null)
         {
             if (entry == null) throw new ArgumentNullException(nameof(entry));
+            if (String.IsNullOrEmpty(entry.GUID)) entry.GUID = Guid.NewGuid().ToString();
 
             if (maxAttempts != null)
             {
@@ -263,26 +265,29 @@ namespace OpenAuditLog
                 entry.MaxAttempts = _MaxAttempts;
             }
 
+            AuditLogModel model = new AuditLogModel(entry);
+
             lock (_Lock)
             {
                 if (targetGuids != null)
                 {
                     foreach (string targetGuid in targetGuids)
                     {
-                        entry.TargetGUID = targetGuid;
-                        _ORM.Insert<AuditLogEntry>(entry);
+                        model.TargetGUID = targetGuid;
+                        _ORM.Insert<AuditLogModel>(model);
                     }
                 }
                 else
                 {
                     foreach (AuditLogTarget target in _Targets)
                     {
-                        Console.WriteLine("Attaching target GUID " + target.GUID + " to event GUID " + entry.GUID);
-                        entry.TargetGUID = target.GUID;
-                        _ORM.Insert<AuditLogEntry>(entry);
+                        model.TargetGUID = target.GUID;
+                        _ORM.Insert<AuditLogModel>(model);
                     }
                 }
             }
+
+            return model.GUID;
         }
 
         /// <summary>
@@ -293,9 +298,9 @@ namespace OpenAuditLog
         public void RemoveEvent(string guid, string targetGuid = null)
         {
             if (String.IsNullOrEmpty(guid)) throw new ArgumentNullException(nameof(guid)); 
-            DbExpression e = new DbExpression(_ORM.GetColumnName<AuditLogEntry>(nameof(AuditLogEntry.GUID)), DbOperators.Equals, guid);
-            if (!String.IsNullOrEmpty(targetGuid)) e.PrependAnd(_ORM.GetColumnName<AuditLogEntry>(nameof(AuditLogEntry.TargetGUID)), DbOperators.Equals, targetGuid);
-            _ORM.DeleteMany<AuditLogEntry>(e);
+            DbExpression e = new DbExpression(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.GUID)), DbOperators.Equals, guid);
+            if (!String.IsNullOrEmpty(targetGuid)) e.PrependAnd(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.TargetGUID)), DbOperators.Equals, targetGuid);
+            _ORM.DeleteMany<AuditLogModel>(e);
         }
 
         #endregion
@@ -304,9 +309,9 @@ namespace OpenAuditLog
 
         private void Emitter(CancellationToken token)
         { 
-            DbExpression expr = new DbExpression(_ORM.GetColumnName<AuditLogEntry>(nameof(AuditLogEntry.Id)), DbOperators.GreaterThan, 0);
+            DbExpression expr = new DbExpression(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.Id)), DbOperators.GreaterThan, 0);
             DbResultOrder[] ro = new DbResultOrder[1];
-            ro[0] = new DbResultOrder(_ORM.GetColumnName<AuditLogEntry>(nameof(AuditLogEntry.CreatedUtc)), DbOrderDirection.Ascending);
+            ro[0] = new DbResultOrder(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.CreatedUtc)), DbOrderDirection.Ascending);
 
             List<AuditLogTarget> targets = null;
 
@@ -323,55 +328,55 @@ namespace OpenAuditLog
                         targets = new List<AuditLogTarget>(_Targets);
                     }
 
-                    List<AuditLogEntry> entries = _ORM.SelectMany<AuditLogEntry>(null, _BatchSize, expr, ro);
-                    if (entries == null || entries.Count < 1) continue;
+                    List<AuditLogModel> models = _ORM.SelectMany<AuditLogModel>(null, _BatchSize, expr, ro);
+                    if (models == null || models.Count < 1) continue;
 
-                    foreach (AuditLogEntry entry in entries)
+                    foreach (AuditLogModel model in models)
                     {
-                        if (entry.Attempts >= entry.MaxAttempts)
+                        if (model.Attempts >= model.MaxAttempts)
                         {
-                            Log("entry " + entry.GUID + " reached maximum attempts, deleting (" + entry.Attempts + " of " + entry.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(entry, false));
-                            _ORM.Delete<AuditLogEntry>(entry);
-                            EntryEvicted?.Invoke(this, new EntryEventArgs(entry, null));
+                            Log("entry " + model.GUID + " reached maximum attempts, deleting (" + model.Attempts + " of " + model.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(model, false));
+                            _ORM.Delete<AuditLogModel>(model);
+                            EntryEvicted?.Invoke(this, new EntryEventArgs(model.ToAuditLogEntry(), null));
                             continue;
                         }
 
-                        AuditLogTarget target = targets.FirstOrDefault(t => t.GUID.Equals(entry.TargetGUID));
+                        AuditLogTarget target = targets.FirstOrDefault(t => t.GUID.Equals(model.TargetGUID));
                         if (target == default(AuditLogTarget))
                         {
-                            Log("target " + entry.TargetGUID + " not found, deleting entry " + entry.GUID);
-                            _ORM.Delete<AuditLogEntry>(entry);
+                            Log("target " + model.TargetGUID + " not found, deleting entry " + model.GUID);
+                            _ORM.Delete<AuditLogModel>(model);
                         }
                         else
                         {
                             try
                             {
-                                if (!target.Action(entry))
+                                if (!target.Action(model.ToAuditLogEntry()))
                                 {
-                                    entry.Attempts = entry.Attempts + 1;
-                                    _ORM.Update<AuditLogEntry>(entry);
+                                    model.Attempts = model.Attempts + 1;
+                                    _ORM.Update<AuditLogModel>(model);
 
-                                    Log("target " + target.GUID + " " + target.Name + " reported failure for entry " + entry.GUID + " (" + entry.Attempts + " of " + entry.MaxAttempts + " max)");
-                                    EntrySendFailure?.Invoke(this, new EntryEventArgs(entry, target));
+                                    Log("target " + target.GUID + " " + target.Name + " reported failure for entry " + model.GUID + " (" + model.Attempts + " of " + model.MaxAttempts + " max)");
+                                    EntrySendFailure?.Invoke(this, new EntryEventArgs(model.ToAuditLogEntry(), target));
 
-                                    if (entry.Attempts >= entry.MaxAttempts)
+                                    if (model.Attempts >= model.MaxAttempts)
                                     {
-                                        Log("entry " + entry.GUID + " reached maximum attempts, deleting (" + entry.Attempts + " of " + entry.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(entry, false));
-                                        _ORM.Delete<AuditLogEntry>(entry);
-                                        EntryEvicted?.Invoke(this, new EntryEventArgs(entry, null));
+                                        Log("entry " + model.GUID + " reached maximum attempts, deleting (" + model.Attempts + " of " + model.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(model, false));
+                                        _ORM.Delete<AuditLogModel>(model);
+                                        EntryEvicted?.Invoke(this, new EntryEventArgs(model.ToAuditLogEntry(), null));
                                         continue;
                                     }
                                 }
                                 else
                                 {
-                                    Log("target " + target.GUID + " " + target.Name + " success for entry " + entry.GUID);
-                                    _ORM.Delete<AuditLogEntry>(entry);
+                                    Log("target " + target.GUID + " " + target.Name + " success for entry " + model.GUID);
+                                    _ORM.Delete<AuditLogModel>(model);
                                 }
                             }
                             catch (Exception eInner)
                             {
-                                Log("exception encountered using target " + target.GUID + " " + target.Name + " for entry " + entry.GUID + Environment.NewLine + Common.SerializeJson(eInner, true));
-                                EntrySendFailure?.Invoke(this, new EntryEventArgs(entry, target, eInner));
+                                Log("exception encountered using target " + target.GUID + " " + target.Name + " for entry " + model.GUID + Environment.NewLine + Common.SerializeJson(eInner, true));
+                                EntrySendFailure?.Invoke(this, new EntryEventArgs(model.ToAuditLogEntry(), target, eInner));
                             }
                         }
                     }

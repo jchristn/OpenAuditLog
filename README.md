@@ -61,8 +61,20 @@ Events added through ```AddEvent``` are persisted in Sqlite until emitted succes
 Events sent successfully are removed from Sqlite, and those that have failed the specified number of times will also be removed.  Refer to "Logger of Last Resort" above to determine how to intercept such situations.
 
 ```csharp
-// using an object of your own
-AuditLogEntry myEntry = new AuditLogEntry(myClassInstance);
+// build it yourself
+AuditLogEntry myEntry = new AuditLogEntry();
+myEntry.Metadata = myClassInstance;
+// also set Identity, Source, Target, Resource, Type, etc, if you like
+```
+
+```csharp
+// or use the giga-constructor
+AuditLogEntry myEntry = new AuditLogEntry(metadata, identity, source, ...);
+```
+
+Fire away!
+
+```csharp
 log.AddEvent(myEntry);
 ```
 
@@ -81,8 +93,16 @@ Func<AuditLogEntry, bool> myTarget = delegate (AuditLogEntry a)
     return true; 
 };
 
-auditLog.AddTarget(new AuditLogTarget("target1", myTarget));  
-auditLog.AddEvent(new AuditLogEntry("Hello, world!"));
+// add the target
+auditLog.AddTarget(new AuditLogTarget("target1", myTarget));
+
+// create the event
+AuditLogEntry entry = new AuditLogEntry();
+entry.Metadata = myClassInstance;
+// also set Identity, Source, Target, Resource, Type, etc
+
+// fire away!
+auditLog.AddEvent(entry);
 ```
 
 ## Version History

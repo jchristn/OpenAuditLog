@@ -90,6 +90,7 @@
             <param name="entry">Audit log entry.</param>
             <param name="targetGuids">List of target GUIDs to which the event should be sent.  Leave null to send to all targets.</param>
             <param name="maxAttempts">The maximum number of attempts to make in sending this event.  Leave null to use the value from the 'Retries' property.</param>
+            <returns>GUID of the entry.</returns>
         </member>
         <member name="M:OpenAuditLog.AuditLog.RemoveEvent(System.String,System.String)">
             <summary>
@@ -101,11 +102,6 @@
         <member name="T:OpenAuditLog.AuditLogEntry">
             <summary>
             Audit log entry.
-            </summary>
-        </member>
-        <member name="P:OpenAuditLog.AuditLogEntry.Id">
-            <summary>
-            Database row ID.
             </summary>
         </member>
         <member name="P:OpenAuditLog.AuditLogEntry.GUID">
@@ -138,11 +134,6 @@
             Resource on the target with which the source was attempting to interact.
             </summary>
         </member>
-        <member name="P:OpenAuditLog.AuditLogEntry.Handle">
-            <summary>
-            The handle of the resource.
-            </summary>
-        </member>
         <member name="P:OpenAuditLog.AuditLogEntry.Type">
             <summary>
             Type of event.
@@ -163,11 +154,6 @@
             User-supplied metadata.
             </summary>
         </member>
-        <member name="P:OpenAuditLog.AuditLogEntry.Attempts">
-            <summary>
-            The number of attempts made to send this event.
-            </summary>
-        </member>
         <member name="P:OpenAuditLog.AuditLogEntry.MaxAttempts">
             <summary>
             The maximum number of attempts allowed to send this event.
@@ -175,7 +161,7 @@
         </member>
         <member name="P:OpenAuditLog.AuditLogEntry.CreatedUtc">
             <summary>
-            Timestamp of the creation of the event.
+            Timestamp in UTC from the creation of the event.
             </summary>
         </member>
         <member name="M:OpenAuditLog.AuditLogEntry.#ctor">
@@ -183,7 +169,7 @@
             Instantiate the object.
             </summary>
         </member>
-        <member name="M:OpenAuditLog.AuditLogEntry.#ctor(System.Object,System.String,System.String,System.String,System.String,System.String,System.String,OpenAuditLog.EventResult,System.Int64)">
+        <member name="M:OpenAuditLog.AuditLogEntry.#ctor(System.Object,System.Object,System.Object,System.Object,System.Object,System.String,OpenAuditLog.EventResult,System.Int64)">
             <summary>
             Instantiate the object.
             </summary>
@@ -192,17 +178,101 @@
             <param name="source">Event source.</param>
             <param name="target">Event target.</param>
             <param name="resource">Resource on the target with which the source was attempting to interact.</param>
-            <param name="handle">The handle of the resource.</param>
             <param name="eventType">Type of event.</param>
             <param name="eventResult">Result of the event.</param>
             <param name="contentLength">Amount of data involved in the event.</param>
         </member>
-        <member name="M:OpenAuditLog.AuditLogEntry.ToJson(System.Boolean)">
+        <member name="T:OpenAuditLog.AuditLogModel">
             <summary>
-            Create a JSON representation.
+            Database model for audit log entry.
             </summary>
-            <param name="pretty">Enable or disable pretty print.</param>
-            <returns>JSON string.</returns>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Id">
+            <summary>
+            Database row ID.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.GUID">
+            <summary>
+            GUID.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.TargetGUID">
+            <summary>
+            GUID.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Identity">
+            <summary>
+            Identity of the originator of the request.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Source">
+            <summary>
+            Event source.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Target">
+            <summary>
+            Event target.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Resource">
+            <summary>
+            Resource on the target with which the source was attempting to interact.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Type">
+            <summary>
+            Type of event.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Result">
+            <summary>
+            Indicates the result of the operation.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.ContentLength">
+            <summary>
+            Amount of data involved in the event.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Metadata">
+            <summary>
+            User-supplied metadata.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.Attempts">
+            <summary>
+            The number of attempts made to send this event.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.MaxAttempts">
+            <summary>
+            The maximum number of attempts allowed to send this event.
+            </summary>
+        </member>
+        <member name="P:OpenAuditLog.AuditLogModel.CreatedUtc">
+            <summary>
+            Timestamp of the creation of the event.
+            </summary>
+        </member>
+        <member name="M:OpenAuditLog.AuditLogModel.#ctor">
+            <summary>
+            Instantiate the object.
+            </summary>
+        </member>
+        <member name="M:OpenAuditLog.AuditLogModel.#ctor(OpenAuditLog.AuditLogEntry)">
+            <summary>
+            Instantiate the object.
+            </summary>
+            <param name="entry">Audit log entry.</param>
+        </member>
+        <member name="M:OpenAuditLog.AuditLogModel.ToAuditLogEntry">
+            <summary>
+            Create an audit log entry object from the model.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:OpenAuditLog.AuditLogTarget">
             <summary>
@@ -301,6 +371,19 @@
             <summary>
             Denied.
             </summary>
+        </member>
+        <member name="T:OpenAuditLog.ObjectExtensions">
+            <summary>
+            Object extensions.
+            </summary>
+        </member>
+        <member name="M:OpenAuditLog.ObjectExtensions.ToJson(System.Object,System.Boolean)">
+            <summary>
+            Return a JSON string of this object.
+            </summary>
+            <param name="obj">Object.</param>
+            <param name="pretty">Enable or disable pretty print.</param>
+            <returns>JSON string.</returns>
         </member>
     </members>
 </doc>
