@@ -335,7 +335,10 @@ namespace OpenAuditLog
                     {
                         if (model.Attempts >= model.MaxAttempts)
                         {
-                            Log("entry " + model.GUID + " reached maximum attempts, deleting (" + model.Attempts + " of " + model.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(model, false));
+                            Log(
+                                "entry " + model.GUID + " reached maximum attempts, deleting (" + model.Attempts + " of " + model.MaxAttempts + " max):" + 
+                                Environment.NewLine + 
+                                Common.SerializeJson(model.ToAuditLogEntry(), false));
                             _ORM.Delete<AuditLogModel>(model);
                             EntryEvicted?.Invoke(this, new EntryEventArgs(model.ToAuditLogEntry(), null));
                             continue;
@@ -361,7 +364,10 @@ namespace OpenAuditLog
 
                                     if (model.Attempts >= model.MaxAttempts)
                                     {
-                                        Log("entry " + model.GUID + " reached maximum attempts, deleting (" + model.Attempts + " of " + model.MaxAttempts + " max):" + Environment.NewLine + Common.SerializeJson(model, false));
+                                        Log(
+                                            "entry " + model.GUID + " reached maximum attempts, deleting (" + model.Attempts + " of " + model.MaxAttempts + " max):" + 
+                                            Environment.NewLine + 
+                                            Common.SerializeJson(model.ToAuditLogEntry(), false));
                                         _ORM.Delete<AuditLogModel>(model);
                                         EntryEvicted?.Invoke(this, new EntryEventArgs(model.ToAuditLogEntry(), null));
                                         continue;
