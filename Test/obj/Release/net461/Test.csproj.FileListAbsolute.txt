@@ -120,7 +120,6 @@ C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\System.Xml.XPath.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\System.Xml.XPath.XDocument.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\OpenAuditLog.pdb
-C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.csprojAssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.exe.config
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.AssemblyInfoInputs.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.AssemblyInfo.cs
@@ -128,3 +127,6 @@ C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.csproj.CoreCompileInputs.
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.csproj.CopyComplete
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.exe
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.pdb
+C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.csproj.AssemblyReference.cache
+C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.csproj.SuggestedBindingRedirects.cache
+C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.GeneratedMSBuildEditorConfig.editorconfig

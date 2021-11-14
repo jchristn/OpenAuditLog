@@ -35,7 +35,6 @@ C:\Code\Misc\OpenAuditLog\Test\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\e
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\netcoreapp3.1\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\netcoreapp3.1\OpenAuditLog.pdb
-C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.csprojAssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.AssemblyInfoInputs.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.AssemblyInfo.cs
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.csproj.CoreCompileInputs.cache
@@ -43,3 +42,5 @@ C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.csproj.CopyComplete
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.dll
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.pdb
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.genruntimeconfig.cache
+C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.csproj.AssemblyReference.cache
+C:\Code\Misc\OpenAuditLog\Test\obj\Debug\netcoreapp3.1\Test.GeneratedMSBuildEditorConfig.editorconfig

@@ -36,7 +36,6 @@ C:\Code\Misc\OpenAuditLog\Test\bin\Release\net5.0\runtimes\win-x64\native\e_sqli
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net5.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net5.0\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net5.0\OpenAuditLog.pdb
-C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.csprojAssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.GeneratedMSBuildEditorConfig.editorconfig
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.AssemblyInfoInputs.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.AssemblyInfo.cs
@@ -46,3 +45,4 @@ C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.dll
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\ref\Test.dll
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.pdb
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.genruntimeconfig.cache
+C:\Code\Misc\OpenAuditLog\Test\obj\Release\net5.0\Test.csproj.AssemblyReference.cache

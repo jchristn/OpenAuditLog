@@ -9,4 +9,5 @@ C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\netstandard2.1\OpenAuditLog.Ass
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\netstandard2.1\OpenAuditLog.csproj.CoreCompileInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\netstandard2.1\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\netstandard2.1\OpenAuditLog.pdb
-C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\netstandard2.1\OpenAuditLog.csprojAssemblyReference.cache
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\netstandard2.1\OpenAuditLog.csproj.AssemblyReference.cache
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\netstandard2.1\OpenAuditLog.GeneratedMSBuildEditorConfig.editorconfig

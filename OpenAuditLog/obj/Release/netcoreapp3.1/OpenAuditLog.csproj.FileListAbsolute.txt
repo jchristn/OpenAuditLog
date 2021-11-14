@@ -4,9 +4,10 @@ C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netcoreapp3.1\LICENSE.md
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netcoreapp3.1\OpenAuditLog.deps.json
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netcoreapp3.1\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netcoreapp3.1\OpenAuditLog.pdb
-C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.csprojAssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.AssemblyInfoInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.AssemblyInfo.cs
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.csproj.CoreCompileInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.pdb
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.csproj.AssemblyReference.cache
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netcoreapp3.1\OpenAuditLog.GeneratedMSBuildEditorConfig.editorconfig

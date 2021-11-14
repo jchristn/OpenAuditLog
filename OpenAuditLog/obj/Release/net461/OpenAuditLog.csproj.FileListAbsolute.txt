@@ -116,10 +116,11 @@ C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\net461\System.Xml.XmlDocument
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\net461\System.Xml.XmlSerializer.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\net461\System.Xml.XPath.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\net461\System.Xml.XPath.XDocument.dll
-C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.csprojAssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.AssemblyInfoInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.AssemblyInfo.cs
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.csproj.CoreCompileInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.csproj.CopyComplete
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.pdb
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.csproj.AssemblyReference.cache
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\net461\OpenAuditLog.GeneratedMSBuildEditorConfig.editorconfig

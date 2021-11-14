@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.0.7</Version>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net461;net5.0</TargetFrameworks>
+    <Version>1.0.0.8</Version>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net461;net5.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Joel Christner</Authors>
     <Company>Joel Christner</Company>
@@ -12,7 +12,7 @@
     <PackageTags>audit log event emitter</PackageTags>
     <Description>Simple C# event library providing event persistence and allowing you to write your own emitters</Description>
     <Copyright>(c)2021 Joel Christner</Copyright>
-    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageReleaseNotes>.NET 6 support</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageIcon>logo.png</PackageIcon>
   </PropertyGroup>

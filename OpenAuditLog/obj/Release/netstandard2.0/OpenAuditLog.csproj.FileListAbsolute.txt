@@ -5,9 +5,10 @@ C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netstandard2.0\OpenAuditLog.d
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netstandard2.0\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netstandard2.0\OpenAuditLog.pdb
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Release\netstandard2.0\OpenAuditLog.xml
-C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.csprojAssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.AssemblyInfoInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.AssemblyInfo.cs
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.csproj.CoreCompileInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.pdb
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.csproj.AssemblyReference.cache
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Release\netstandard2.0\OpenAuditLog.GeneratedMSBuildEditorConfig.editorconfig

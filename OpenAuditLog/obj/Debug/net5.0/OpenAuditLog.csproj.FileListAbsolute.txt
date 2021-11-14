@@ -5,7 +5,6 @@ C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Debug\net5.0\OpenAuditLog.deps.json
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Debug\net5.0\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Debug\net5.0\ref\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\bin\Debug\net5.0\OpenAuditLog.pdb
-C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.csprojAssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.GeneratedMSBuildEditorConfig.editorconfig
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.AssemblyInfoInputs.cache
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.AssemblyInfo.cs
@@ -13,3 +12,4 @@ C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.csproj.Core
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\ref\OpenAuditLog.dll
 C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.pdb
+C:\Code\Misc\OpenAuditLog\OpenAuditLog\obj\Debug\net5.0\OpenAuditLog.csproj.AssemblyReference.cache
