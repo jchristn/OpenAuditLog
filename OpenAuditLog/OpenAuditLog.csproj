@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.0.8</Version>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net461;net5.0;net6.0</TargetFrameworks>
+    <Version>1.0.0.9</Version>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net461;net5.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Joel Christner</Authors>
     <Company>Joel Christner</Company>
@@ -11,7 +11,7 @@
     <RepositoryType>github</RepositoryType>
     <PackageTags>audit log event emitter</PackageTags>
     <Description>Simple C# event library providing event persistence and allowing you to write your own emitters</Description>
-    <Copyright>(c)2021 Joel Christner</Copyright>
+    <Copyright>(c)2022 Joel Christner</Copyright>
     <PackageReleaseNotes>.NET 6 support</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageIcon>logo.png</PackageIcon>
@@ -26,8 +26,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="WatsonORM.Sqlite" Version="1.3.0.22" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="WatsonORM.Sqlite" Version="2.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>

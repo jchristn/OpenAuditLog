@@ -12,9 +12,7 @@ C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\Microsoft.Extensions.Configura
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\Microsoft.Extensions.Primitives.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\Newtonsoft.Json.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\SQLitePCLRaw.batteries_v2.dll
-C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\SQLitePCLRaw.nativelibrary.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\SQLitePCLRaw.core.dll
-C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\SQLitePCLRaw.provider.dynamic_cdecl.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\System.Buffers.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\System.Memory.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Release\net461\System.Numerics.Vectors.dll
@@ -130,3 +128,5 @@ C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.pdb
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.csproj.AssemblyReference.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.csproj.SuggestedBindingRedirects.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Release\net461\Test.GeneratedMSBuildEditorConfig.editorconfig
+C:\code\Misc\OpenAuditLog\Test\bin\Release\net461\ExpressionTree.dll
+C:\code\Misc\OpenAuditLog\Test\bin\Release\net461\SQLitePCLRaw.provider.e_sqlite3.dll

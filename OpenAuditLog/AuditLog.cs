@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using DatabaseWrapper.Core;
+using ExpressionTree;
 using Watson.ORM.Core;
 using Watson.ORM.Sqlite;
 using Newtonsoft.Json;
@@ -229,7 +231,7 @@ namespace OpenAuditLog
             {
                 if (_Targets.Any(t => t.GUID.Equals(guid)))
                 {
-                    DbExpression e = new DbExpression(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.TargetGUID)), DbOperators.Equals, guid);
+                    Expr e = new Expr(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.TargetGUID)), OperatorEnum.Equals, guid);
                     _ORM.DeleteMany<AuditLogModel>(e);
 
                     List<AuditLogTarget> remove = _Targets.Where(t => t.GUID.Equals(guid)).ToList();
@@ -298,8 +300,8 @@ namespace OpenAuditLog
         public void RemoveEvent(string guid, string targetGuid = null)
         {
             if (String.IsNullOrEmpty(guid)) throw new ArgumentNullException(nameof(guid)); 
-            DbExpression e = new DbExpression(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.GUID)), DbOperators.Equals, guid);
-            if (!String.IsNullOrEmpty(targetGuid)) e.PrependAnd(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.TargetGUID)), DbOperators.Equals, targetGuid);
+            Expr e = new Expr(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.GUID)), OperatorEnum.Equals, guid);
+            if (!String.IsNullOrEmpty(targetGuid)) e.PrependAnd(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.TargetGUID)), OperatorEnum.Equals, targetGuid);
             _ORM.DeleteMany<AuditLogModel>(e);
         }
 
@@ -309,9 +311,9 @@ namespace OpenAuditLog
 
         private void Emitter(CancellationToken token)
         { 
-            DbExpression expr = new DbExpression(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.Id)), DbOperators.GreaterThan, 0);
-            DbResultOrder[] ro = new DbResultOrder[1];
-            ro[0] = new DbResultOrder(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.CreatedUtc)), DbOrderDirection.Ascending);
+            Expr expr = new Expr(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.Id)), OperatorEnum.GreaterThan, 0);
+            ResultOrder[] ro = new ResultOrder[1];
+            ro[0] = new ResultOrder(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.CreatedUtc)), OrderDirection.Ascending);
 
             List<AuditLogTarget> targets = null;
 

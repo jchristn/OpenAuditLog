@@ -6,7 +6,6 @@ C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Test.deps.json
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Test.runtimeconfig.json
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Test.runtimeconfig.dev.json
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Test.dll
-C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\ref\Test.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Test.pdb
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\DatabaseWrapper.Core.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\DatabaseWrapper.Sqlite.dll
@@ -16,9 +15,7 @@ C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Microsoft.Extensions.Configurati
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\SQLitePCLRaw.batteries_v2.dll
-C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\SQLitePCLRaw.nativelibrary.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\SQLitePCLRaw.core.dll
-C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\SQLitePCLRaw.provider.dynamic_cdecl.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\WatsonORM.Core.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\WatsonORM.Sqlite.dll
 C:\Code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\runtimes\alpine-x64\native\libe_sqlite3.so
@@ -46,3 +43,9 @@ C:\Code\Misc\OpenAuditLog\Test\obj\Debug\net5.0\ref\Test.dll
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\net5.0\Test.pdb
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\net5.0\Test.genruntimeconfig.cache
 C:\Code\Misc\OpenAuditLog\Test\obj\Debug\net5.0\Test.csproj.AssemblyReference.cache
+C:\code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\ExpressionTree.dll
+C:\code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+C:\code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\runtimes\linux-s390x\native\libe_sqlite3.so
+C:\code\Misc\OpenAuditLog\Test\bin\Debug\net5.0\runtimes\osx-arm64\native\libe_sqlite3.dylib
+C:\code\Misc\OpenAuditLog\Test\obj\Debug\net5.0\refint\Test.dll
