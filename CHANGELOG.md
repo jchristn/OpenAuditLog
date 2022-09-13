@@ -2,10 +2,12 @@
 
 ## Current Version
 
-v1.0.0
+v1.0.1
 
-- Initial release
+- Removed Newtonsoft.Json dependency
 
 ## Previous Versions
  
-Notes from previous versions will be listed here.
+v1.0.0
+
+- Initial release

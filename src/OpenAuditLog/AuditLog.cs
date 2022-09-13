@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using DatabaseWrapper.Core;
 using ExpressionTree;
 using Watson.ORM.Core;
 using Watson.ORM.Sqlite;
-using Newtonsoft.Json;
 
 namespace OpenAuditLog
 {

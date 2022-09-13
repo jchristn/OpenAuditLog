@@ -1,21 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Security.AccessControl;
-using System.Security.Cryptography;
-using System.Security.Principal;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OpenAuditLog
 {
@@ -180,23 +167,19 @@ namespace OpenAuditLog
 
             if (pretty)
             {
-                json = JsonConvert.SerializeObject(
-                  obj,
-                  Newtonsoft.Json.Formatting.Indented,
-                  new JsonSerializerSettings
-                  {
-                      NullValueHandling = NullValueHandling.Ignore,
-                      DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                  });
+                json = JsonSerializer.Serialize(obj, new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                });
             }
             else
             {
-                json = JsonConvert.SerializeObject(obj,
-                  new JsonSerializerSettings
-                  {
-                      NullValueHandling = NullValueHandling.Ignore,
-                      DateTimeZoneHandling = DateTimeZoneHandling.Utc
-                  });
+                json = JsonSerializer.Serialize(obj, new JsonSerializerOptions
+                {
+                    WriteIndented = false,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                });
             }
 
             return json;
@@ -207,7 +190,7 @@ namespace OpenAuditLog
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
             if (String.IsNullOrEmpty(json)) throw new ArgumentNullException(nameof(json));
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonSerializer.Deserialize<T>(json);
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -215,7 +198,7 @@ namespace OpenAuditLog
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
             if (data == null || data.Length < 1) throw new ArgumentNullException(nameof(data));
-            return DeserializeJson<T>(Encoding.UTF8.GetString(data));
+            return JsonSerializer.Deserialize<T>(data);
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

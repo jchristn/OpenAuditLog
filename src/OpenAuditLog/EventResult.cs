@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json.Serialization;
 using System.Runtime.Serialization;
 
 namespace OpenAuditLog
@@ -10,7 +6,7 @@ namespace OpenAuditLog
     /// <summary>
     /// The result of the event.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum EventResult
     {
         /// <summary>
