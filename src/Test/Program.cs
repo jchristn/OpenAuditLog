@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenAuditLog;
-
-namespace Test
+﻿namespace Test
 {
+    using System;
+    using System.Collections.Generic;
+    using OpenAuditLog;
+
     class Program
     {
         static AuditLog _AuditLog;

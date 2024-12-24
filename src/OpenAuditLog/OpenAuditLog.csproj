@@ -1,32 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.1</Version>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net461;net5.0;net6.0</TargetFrameworks>
+    <Version>1.0.2</Version>
+    <TargetFrameworks>netstandard2.1;net462;net6.0;net8.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Joel Christner</Authors>
     <Company>Joel Christner</Company>
     <PackageProjectUrl>https://github.com/jchristn/OpenAuditLog</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jchristn/OpenAuditLog</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
-    <PackageTags>audit log event emitter</PackageTags>
+    <PackageTags>audit log event emitter logger</PackageTags>
     <Description>Simple C# event library providing event persistence and allowing you to write your own emitters</Description>
-    <Copyright>(c)2022 Joel Christner</Copyright>
+    <Copyright>(c)2024 Joel Christner</Copyright>
     <PackageReleaseNotes>Remove Newtonsoft.Json</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageIcon>logo.png</PackageIcon>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <DocumentationFile>OpenAuditLog.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <DocumentationFile>OpenAuditLog.xml</DocumentationFile>
+	  <DocumentationFile>OpenAuditLog.xml</DocumentationFile>
+	  <Title>OpenAuditLog</Title>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.6" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
     <PackageReference Include="WatsonORM.Sqlite" Version="2.0.1.1" />
   </ItemGroup>
 
@@ -39,6 +34,10 @@
     </None>
     <None Update="LICENSE.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <None Include="assets\logo.png">
       <Pack>True</Pack>

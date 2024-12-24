@@ -1,10 +1,10 @@
-﻿using System;
-using System.Text.Json.Serialization;
-using DatabaseWrapper.Core;
-using Watson.ORM.Core;
-
-namespace OpenAuditLog
+﻿namespace OpenAuditLog
 {
+    using System;
+    using System.Text.Json.Serialization;
+    using DatabaseWrapper.Core;
+    using Watson.ORM.Core;
+
     /// <summary>
     /// Database model for audit log entry.
     /// </summary>

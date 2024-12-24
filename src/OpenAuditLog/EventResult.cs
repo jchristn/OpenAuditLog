@@ -1,8 +1,8 @@
-﻿using System.Text.Json.Serialization;
-using System.Runtime.Serialization;
-
-namespace OpenAuditLog
+﻿namespace OpenAuditLog
 {
+    using System.Text.Json.Serialization;
+    using System.Runtime.Serialization;
+
     /// <summary>
     /// The result of the event.
     /// </summary>

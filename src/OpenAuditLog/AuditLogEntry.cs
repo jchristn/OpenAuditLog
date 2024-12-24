@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text.Json.Serialization;
-
-namespace OpenAuditLog
+﻿namespace OpenAuditLog
 {
+    using System;
+    using System.Text.Json.Serialization;
+
     /// <summary>
     /// Audit log entry.
     /// </summary>

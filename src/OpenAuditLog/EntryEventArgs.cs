@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OpenAuditLog
+﻿namespace OpenAuditLog
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     /// <summary>
     /// Event arguments for attempts to send an entry to a target.
     /// </summary>

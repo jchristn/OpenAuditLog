@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace OpenAuditLog
+﻿namespace OpenAuditLog
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
+
     /// <summary>
     /// Commonly-used static methods.
     /// </summary>
