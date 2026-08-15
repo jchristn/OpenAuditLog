@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>1.0.2</Version>
-    <TargetFrameworks>netstandard2.1;net462;net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net462;net8.0;net10.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Joel Christner</Authors>
     <Company>Joel Christner</Company>

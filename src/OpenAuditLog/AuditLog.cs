@@ -382,7 +382,7 @@
                             }
                             catch (Exception eInner)
                             {
-                                Log("exception encountered using target " + target.GUID + " " + target.Name + " for entry " + model.GUID + Environment.NewLine + Common.SerializeJson(eInner, true));
+                                Log("exception encountered using target " + target.GUID + " " + target.Name + " for entry " + model.GUID + Environment.NewLine + eInner.ToString());
                                 EntrySendFailure?.Invoke(this, new EntryEventArgs(model.ToAuditLogEntry(), target, eInner));
                             }
                         }
@@ -400,7 +400,7 @@
                 }
                 catch (Exception eOuter)
                 {
-                    Log("exception encountered" + Environment.NewLine + Common.SerializeJson(eOuter, true));
+                    Log("exception encountered" + Environment.NewLine + eOuter.ToString());
                 } 
             } 
         }
