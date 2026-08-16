@@ -26,9 +26,7 @@ namespace Test.Shared
         /// <param name="intervalMs">Emitter interval in milliseconds.  Kept small so integration tests do not wait on the 5000ms default.</param>
         internal TempAuditLog(int intervalMs = 50)
         {
-            string dir = Path.Combine(Path.GetTempPath(), "oal-tests");
-            Directory.CreateDirectory(dir);
-            _Path = Path.Combine(dir, Guid.NewGuid().ToString() + ".db");
+            _Path = TempDatabase.CreatePath();
 
             Log = new AuditLog(_Path);
 
@@ -44,12 +42,40 @@ namespace Test.Shared
             try { Log.Dispose(); }
             catch { /* best effort */ }
 
+            TempDatabase.DeleteWithRetry(_Path);
+        }
+    }
+
+    /// <summary>
+    /// Temp database path and cleanup helpers shared by Sqlite-backed tests.
+    /// </summary>
+    internal static class TempDatabase
+    {
+        /// <summary>
+        /// Create a unique database path for a test.
+        /// </summary>
+        /// <returns>Database path.</returns>
+        internal static string CreatePath()
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "oal-tests");
+            Directory.CreateDirectory(dir);
+            return Path.Combine(dir, Guid.NewGuid().ToString() + ".db");
+        }
+
+        /// <summary>
+        /// Best-effort delete of a database file that may have just been used by the emitter.
+        /// </summary>
+        /// <param name="path">Database path.</param>
+        internal static void DeleteWithRetry(string path)
+        {
+            if (String.IsNullOrEmpty(path)) return;
+
             // The emitter task may still hold the Sqlite handle briefly after cancellation.
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 120; i++)
             {
                 try
                 {
-                    if (File.Exists(_Path)) File.Delete(_Path);
+                    if (File.Exists(path)) File.Delete(path);
                     break;
                 }
                 catch

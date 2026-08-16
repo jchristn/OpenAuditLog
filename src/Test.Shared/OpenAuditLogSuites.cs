@@ -946,6 +946,42 @@ namespace Test.Shared
                         }
                         return Task.CompletedTask;
                     }),
+                    new TestCaseDescriptor(suiteId, "pending_event_survives_database_reopen", "A pending event is delivered after reopening the same database", _ =>
+                    {
+                        string path = TempDatabase.CreatePath();
+                        try
+                        {
+                            using (AuditLog first = new AuditLog(path))
+                            {
+                                first.IntervalMs = 50;
+                                first.AddEvent(new AuditLogEntry { Type = "AfterReopen" }, new List<string> { "guid-reopen" });
+                            }
+
+                            int deliveries = 0;
+                            AuditLogEntry delivered = null;
+                            using (AuditLog second = new AuditLog(path))
+                            {
+                                second.IntervalMs = 50;
+                                second.AddTarget(new AuditLogTarget("guid-reopen", "reopen", e =>
+                                {
+                                    delivered = e;
+                                    Interlocked.Increment(ref deliveries);
+                                    return true;
+                                }));
+
+                                bool got = Wait.Until(() => Volatile.Read(ref deliveries) >= 1);
+                                Assert(got, "Pending event was not delivered after reopening the database.");
+                                Assert(delivered != null, "Delivered entry should be captured.");
+                                Assert(delivered.Type == "AfterReopen", "Delivered entry did not preserve its type after reopen.");
+                            }
+                        }
+                        finally
+                        {
+                            TempDatabase.DeleteWithRetry(path);
+                        }
+
+                        return Task.CompletedTask;
+                    }),
                     new TestCaseDescriptor(suiteId, "retries_then_evicts_failing_entry", "A failing entry is retried then evicted after exceeding max attempts", _ =>
                     {
                         using (TempAuditLog t = new TempAuditLog())
