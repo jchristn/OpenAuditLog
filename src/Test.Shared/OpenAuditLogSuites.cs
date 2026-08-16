@@ -33,6 +33,7 @@ namespace Test.Shared
                     EventResultSuite(),
                     SerializationSuite(),
                     ValidationSuite(),
+                    ConfigurationSuite(),
                     TargetManagementSuite(),
                     EventSuite(),
                     EmitterSuite()
@@ -279,6 +280,35 @@ namespace Test.Shared
                         Assert(restored.Resource == null, "Resource should remain null.");
                         Assert(restored.Metadata == null, "Metadata should remain null.");
                         return Task.CompletedTask;
+                    }),
+                    new TestCaseDescriptor(suiteId, "complex_object_reference_fields_round_trip", "Complex object reference fields survive the model round-trip", _ =>
+                    {
+                        Dictionary<string, object> metadata = new Dictionary<string, object>
+                        {
+                            { "user", "alice" },
+                            { "count", 42 }
+                        };
+                        AuditLogEntry entry = new AuditLogEntry
+                        {
+                            Identity = new Dictionary<string, object> { { "role", "admin" } },
+                            Metadata = metadata,
+                            Type = "Complex"
+                        };
+
+                        AuditLogModel model = new AuditLogModel(entry);
+                        AuditLogEntry restored = model.ToAuditLogEntry();
+
+                        Assert(restored.Metadata != null, "Metadata should be restored.");
+                        Assert(restored.Identity != null, "Identity should be restored.");
+
+                        // Reference fields deserialize to JSON DOM nodes; re-serialize to verify content survived.
+                        string metadataJson = Common.SerializeJson(restored.Metadata, false);
+                        Assert(metadataJson.Contains("alice"), "Restored metadata should retain the 'user' value.");
+                        Assert(metadataJson.Contains("42"), "Restored metadata should retain the 'count' value.");
+
+                        string identityJson = Common.SerializeJson(restored.Identity, false);
+                        Assert(identityJson.Contains("admin"), "Restored identity should retain its nested value.");
+                        return Task.CompletedTask;
                     })
                 });
         }
@@ -422,6 +452,11 @@ namespace Test.Shared
                     new TestCaseDescriptor(suiteId, "deserialize_empty_bytes_throws", "Deserializing an empty byte array throws", _ =>
                     {
                         AssertThrows<ArgumentNullException>(() => Common.DeserializeJson<AuditLogEntry>(new byte[0]), "Empty bytes should throw.");
+                        return Task.CompletedTask;
+                    }),
+                    new TestCaseDescriptor(suiteId, "deserialize_malformed_json_throws", "Deserializing malformed JSON throws a JsonException", _ =>
+                    {
+                        AssertThrows<System.Text.Json.JsonException>(() => Common.DeserializeJson<AuditLogEntry>("{ not valid json "), "Malformed JSON should throw.");
                         return Task.CompletedTask;
                     }),
                     new TestCaseDescriptor(suiteId, "deserialize_string_round_trip", "String serialize/deserialize round-trips", _ =>
@@ -633,6 +668,64 @@ namespace Test.Shared
 
         #endregion
 
+        #region AuditLog configuration (positive)
+
+        private static TestSuiteDescriptor ConfigurationSuite()
+        {
+            string suiteId = "config";
+            return new TestSuiteDescriptor(
+                suiteId,
+                "AuditLog configuration properties (positive cases)",
+                new List<TestCaseDescriptor>
+                {
+                    new TestCaseDescriptor(suiteId, "interval_ms_accepts_valid_values", "IntervalMs accepts values at and above the minimum", _ =>
+                    {
+                        using (TempAuditLog t = new TempAuditLog())
+                        {
+                            t.Log.IntervalMs = 1;
+                            Assert(t.Log.IntervalMs == 1, "IntervalMs should accept the minimum value of 1.");
+                            t.Log.IntervalMs = 2500;
+                            Assert(t.Log.IntervalMs == 2500, "IntervalMs should round-trip an arbitrary valid value.");
+                        }
+                        return Task.CompletedTask;
+                    }),
+                    new TestCaseDescriptor(suiteId, "batch_size_accepts_valid_values", "BatchSize accepts values at and above the minimum", _ =>
+                    {
+                        using (TempAuditLog t = new TempAuditLog())
+                        {
+                            t.Log.BatchSize = 1;
+                            Assert(t.Log.BatchSize == 1, "BatchSize should accept the minimum value of 1.");
+                            t.Log.BatchSize = 500;
+                            Assert(t.Log.BatchSize == 500, "BatchSize should round-trip an arbitrary valid value.");
+                        }
+                        return Task.CompletedTask;
+                    }),
+                    new TestCaseDescriptor(suiteId, "max_attempts_accepts_valid_values", "MaxAttempts accepts values at and above the minimum", _ =>
+                    {
+                        using (TempAuditLog t = new TempAuditLog())
+                        {
+                            t.Log.MaxAttempts = 1;
+                            Assert(t.Log.MaxAttempts == 1, "MaxAttempts should accept the minimum value of 1.");
+                            t.Log.MaxAttempts = 25;
+                            Assert(t.Log.MaxAttempts == 25, "MaxAttempts should round-trip an arbitrary valid value.");
+                        }
+                        return Task.CompletedTask;
+                    }),
+                    new TestCaseDescriptor(suiteId, "defaults_match_documented_values", "Newly constructed log exposes the documented default configuration", _ =>
+                    {
+                        using (TempAuditLog t = new TempAuditLog())
+                        {
+                            // TempAuditLog overrides IntervalMs, but BatchSize and MaxAttempts keep library defaults.
+                            Assert(t.Log.BatchSize == 100, "BatchSize should default to 100.");
+                            Assert(t.Log.MaxAttempts == 5, "MaxAttempts should default to 5.");
+                        }
+                        return Task.CompletedTask;
+                    })
+                });
+        }
+
+        #endregion
+
         #region AuditLog target management (positive)
 
         private static TestSuiteDescriptor TargetManagementSuite()
@@ -816,6 +909,40 @@ namespace Test.Shared
 
                             Thread.Sleep(300);
                             Assert(Volatile.Read(ref hitB) == 0, "Target B should never have been hit.");
+                        }
+                        return Task.CompletedTask;
+                    }),
+                    new TestCaseDescriptor(suiteId, "broadcasts_to_all_targets_when_unspecified", "An event with no explicit targets is broadcast to every registered target", _ =>
+                    {
+                        using (TempAuditLog t = new TempAuditLog())
+                        {
+                            int hitA = 0;
+                            int hitB = 0;
+                            t.Log.AddTarget(new AuditLogTarget("guid-a", "a", e => { Interlocked.Increment(ref hitA); return true; }));
+                            t.Log.AddTarget(new AuditLogTarget("guid-b", "b", e => { Interlocked.Increment(ref hitB); return true; }));
+
+                            t.Log.AddEvent(new AuditLogEntry { Type = "Broadcast" });
+
+                            bool bothHit = Wait.Until(() => Volatile.Read(ref hitA) >= 1 && Volatile.Read(ref hitB) >= 1);
+                            Assert(bothHit, "Both targets should have received the broadcast event.");
+                        }
+                        return Task.CompletedTask;
+                    }),
+                    new TestCaseDescriptor(suiteId, "successful_event_delivered_exactly_once", "A successfully delivered event is removed and not re-delivered", _ =>
+                    {
+                        using (TempAuditLog t = new TempAuditLog())
+                        {
+                            int deliveries = 0;
+                            t.Log.AddTarget(new AuditLogTarget("guid-once", "once", e => { Interlocked.Increment(ref deliveries); return true; }));
+
+                            t.Log.AddEvent(new AuditLogEntry { Type = "DeliverOnce" });
+
+                            bool delivered = Wait.Until(() => Volatile.Read(ref deliveries) >= 1);
+                            Assert(delivered, "Event was not delivered within the timeout.");
+
+                            // Give the emitter several more intervals; a delivered event must not be re-sent.
+                            Thread.Sleep(400);
+                            Assert(Volatile.Read(ref deliveries) == 1, "A delivered event should be delivered exactly once, saw " + deliveries + ".");
                         }
                         return Task.CompletedTask;
                     }),

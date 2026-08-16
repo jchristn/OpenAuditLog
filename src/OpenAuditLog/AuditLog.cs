@@ -312,7 +312,7 @@
         { 
             Expr expr = new Expr(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.Id)), OperatorEnum.GreaterThan, 0);
             ResultOrder[] ro = new ResultOrder[1];
-            ro[0] = new ResultOrder(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.CreatedUtc)), OrderDirection.Ascending);
+            ro[0] = new ResultOrder(_ORM.GetColumnName<AuditLogModel>(nameof(AuditLogModel.CreatedUtc)), OrderDirectionEnum.Ascending);
 
             List<AuditLogTarget> targets = null;
 

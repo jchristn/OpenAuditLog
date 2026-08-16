@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <TargetFrameworks>netstandard2.1;net462;net8.0;net10.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Authors>Joel Christner</Authors>
     <Company>Joel Christner</Company>
     <PackageProjectUrl>https://github.com/jchristn/OpenAuditLog</PackageProjectUrl>
@@ -11,8 +13,8 @@
     <RepositoryType>github</RepositoryType>
     <PackageTags>audit log event emitter logger</PackageTags>
     <Description>Simple C# event library providing event persistence and allowing you to write your own emitters</Description>
-    <Copyright>(c)2024 Joel Christner</Copyright>
-    <PackageReleaseNotes>Remove Newtonsoft.Json</PackageReleaseNotes>
+    <Copyright>(c)2026 Joel Christner</Copyright>
+    <PackageReleaseNotes>Dependency updates (WatsonORM 3.x, System.Text.Json 10.x); resolves the high-severity SQLite/SQLitePCLRaw advisory GHSA-2m69-gcr7-jv3q by pinning a patched e_sqlite3 bundle. No public API changes. Publishes a symbol package (.snupkg).</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageIcon>logo.png</PackageIcon>
 	  <DocumentationFile>OpenAuditLog.xml</DocumentationFile>
@@ -21,8 +23,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="8.0.5" />
-    <PackageReference Include="WatsonORM.Sqlite" Version="2.0.1.1" />
+    <PackageReference Include="System.Text.Json" Version="10.0.11" />
+    <PackageReference Include="WatsonORM.Sqlite" Version="3.0.14" />
+    <!-- Override the transitive SQLitePCLRaw (2.1.10) pulled in via WatsonORM/Microsoft.Data.Sqlite,
+         which is flagged by GHSA-2m69-gcr7-jv3q (SQLite < 3.50.2).  2.1.13 bundles a patched SQLite. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.13" />
   </ItemGroup>
 
   <ItemGroup>
